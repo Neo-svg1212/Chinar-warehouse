@@ -42,6 +42,146 @@ body {
   font-size: 14px;
 }
 
+/* ─── LOGIN SCREEN ─── */
+#login-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.login-box {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  animation: loginIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes loginIn {
+  from { opacity:0; transform:scale(0.88) translateY(30px); }
+  to { opacity:1; transform:scale(1) translateY(0); }
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-logo .brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 6px;
+  display: block;
+}
+
+.login-logo .brand-sub {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.login-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.login-field {
+  margin-bottom: 16px;
+}
+
+.login-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.login-input {
+  width: 100%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  color: var(--dark);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus { border-color: var(--green); }
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+
+.login-btn:hover { background: var(--green-dark); }
+.login-btn:active { transform: scale(0.98); }
+
+.login-error {
+  background: var(--red-bg);
+  border: 1.5px solid #fccaca;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 14px;
+  display: none;
+}
+
+.login-error.show { display: block; }
+
+.login-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* shake animation for wrong password */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* ─── MAIN APP (hidden until login) ─── */
+#app { display: none; }
+
 /* ─── SIDEBAR ─── */
 .shell { display:flex; min-height:100vh; }
 
@@ -132,6 +272,23 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; color: #fff; font-weight: 700;
 }
+
+.logout-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+  width: 100%;
+  letter-spacing: 0.5px;
+}
+.logout-btn:hover { background: rgba(217,79,79,0.2); border-color: rgba(217,79,79,0.4); color: #ff8080; }
 
 /* ─── MAIN ─── */
 .main {
@@ -732,9 +889,7 @@ select.form-control { cursor: pointer; }
   position: relative;
 }
 
-.bar:hover .bar-tip {
-  opacity: 1;
-}
+.bar:hover .bar-tip { opacity: 1; }
 
 .bar-tip {
   position: absolute;
@@ -786,7 +941,7 @@ select.form-control { cursor: pointer; }
   border-radius: 3px;
 }
 
-/* ─── MOBILE HAMBURGER ─── */
+/* ─── MOBILE ─── */
 .hamburger {
   display: none;
   background: none;
@@ -804,7 +959,6 @@ select.form-control { cursor: pointer; }
   z-index: 150;
 }
 
-/* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
@@ -824,19 +978,47 @@ select.form-control { cursor: pointer; }
   .stats-grid { grid-template-columns: 1fr; }
   .topbar { padding: 12px 16px; }
   .content { padding: 12px; }
+  .login-box { padding: 28px 20px; }
 }
 
-/* ─── PULSE ANIMATION ─── */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
-
 .pulse { animation: pulse 1.5s ease-in-out infinite; }
 </style>
 </head>
 <body>
 
+<!-- ══════ LOGIN SCREEN ══════ -->
+<div id="login-screen">
+  <div class="login-box" id="login-box">
+    <div class="login-logo">
+      <span class="brand">CHINAR</span>
+      <div class="brand-sub">Система управления складом</div>
+    </div>
+    <div class="login-title">Вход в систему</div>
+
+    <div class="login-field">
+      <label class="login-label">Имя пользователя</label>
+      <input class="login-input" type="text" id="login-username" placeholder="Введите имя" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('login-password').focus()">
+    </div>
+
+    <div class="login-field">
+      <label class="login-label">Пароль</label>
+      <input class="login-input" type="password" id="login-password" placeholder="Введите пароль" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+
+    <button class="login-btn" onclick="doLogin()">🔐 Войти</button>
+
+    <div class="login-error" id="login-error">❌ Неверное имя или пароль</div>
+
+    <div class="login-footer">CHINAR Мебель &nbsp;·&nbsp; Авторизованный доступ</div>
+  </div>
+</div>
+
+<!-- ══════ MAIN APP ══════ -->
+<div id="app">
 <div class="shell">
 
 <!-- SIDEBAR -->
@@ -848,46 +1030,40 @@ select.form-control { cursor: pointer; }
 
   <div class="nav-group-label">Основное</div>
   <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
-    <span class="icon">📊</span>
-    <span>Дашборд</span>
+    <span class="icon">📊</span><span>Дашборд</span>
   </div>
   <div class="nav-item" onclick="showPage('pos')" id="nav-pos">
-    <span class="icon">💳</span>
-    <span>Касса (POS)</span>
+    <span class="icon">💳</span><span>Касса (POS)</span>
   </div>
 
   <div class="nav-group-label">Склад</div>
   <div class="nav-item" onclick="showPage('warehouse')" id="nav-warehouse">
-    <span class="icon">📦</span>
-    <span>Остатки товаров</span>
+    <span class="icon">📦</span><span>Остатки товаров</span>
   </div>
   <div class="nav-item" onclick="showPage('income')" id="nav-income">
-    <span class="icon">📥</span>
-    <span>Приход товара</span>
+    <span class="icon">📥</span><span>Приход товара</span>
   </div>
   <div class="nav-item" onclick="showPage('movements')" id="nav-movements">
-    <span class="icon">🔄</span>
-    <span>Движение склада</span>
+    <span class="icon">🔄</span><span>Движение склада</span>
   </div>
 
   <div class="nav-group-label">Финансы</div>
   <div class="nav-item" onclick="showPage('sales')" id="nav-sales">
-    <span class="icon">🧾</span>
-    <span>История продаж</span>
+    <span class="icon">🧾</span><span>История продаж</span>
   </div>
   <div class="nav-item" onclick="showPage('reports')" id="nav-reports">
-    <span class="icon">📈</span>
-    <span>Отчёты</span>
+    <span class="icon">📈</span><span>Отчёты</span>
   </div>
 
   <div class="nav-bottom">
     <div class="user-badge">
-      <div class="user-avatar">А</div>
+      <div class="user-avatar">Б</div>
       <div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:700">Администратор</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:700">Bahrom</div>
         <div style="font-size:10px;color:rgba(255,255,255,0.35)">CHINAR Мебель</div>
       </div>
     </div>
+    <button class="logout-btn" onclick="doLogout()">🚪 Выйти из системы</button>
   </div>
 </aside>
 
@@ -896,7 +1072,6 @@ select.form-control { cursor: pointer; }
 <!-- MAIN -->
 <div class="main">
 
-  <!-- TOPBAR -->
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px">
       <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -909,10 +1084,9 @@ select.form-control { cursor: pointer; }
 
   <div class="content">
 
-    <!-- ══════ DASHBOARD ══════ -->
+    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div id="low-stock-warning"></div>
-
       <div class="stats-grid">
         <div class="stat-card green">
           <div class="stat-icon">💰</div>
@@ -945,25 +1119,18 @@ select.form-control { cursor: pointer; }
           </div>
           <div class="table-wrap">
             <table>
-              <thead>
-                <tr><th>Товар</th><th>Кол-во</th><th>Сумма</th><th>Оплата</th></tr>
-              </thead>
+              <thead><tr><th>Товар</th><th>Кол-во</th><th>Сумма</th><th>Оплата</th></tr></thead>
               <tbody id="dash-recent-sales">
                 <tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">Нет продаж</td></tr>
               </tbody>
             </table>
           </div>
         </div>
-
         <div class="card">
-          <div class="card-header">
-            <span class="card-title">📉 Низкие остатки</span>
-          </div>
+          <div class="card-header"><span class="card-title">📉 Низкие остатки</span></div>
           <div class="table-wrap">
             <table>
-              <thead>
-                <tr><th>Товар</th><th>Остаток</th><th>Статус</th></tr>
-              </thead>
+              <thead><tr><th>Товар</th><th>Остаток</th><th>Статус</th></tr></thead>
               <tbody id="dash-low-stock">
                 <tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px">Всё в норме ✅</td></tr>
               </tbody>
@@ -973,7 +1140,7 @@ select.form-control { cursor: pointer; }
       </div>
     </div>
 
-    <!-- ══════ POS ══════ -->
+    <!-- POS -->
     <div class="page" id="page-pos">
       <div class="pos-layout">
         <div class="pos-products">
@@ -983,17 +1150,14 @@ select.form-control { cursor: pointer; }
           <div class="pos-cat-tabs" id="pos-cat-tabs"></div>
           <div class="pos-grid" id="pos-grid"></div>
         </div>
-
         <div class="cart-panel">
           <div class="cart-panel-header">
             <span class="cart-panel-title">🛒 Чек</span>
             <button class="btn btn-sm btn-danger" onclick="clearCart()">Очистить</button>
           </div>
-
           <div id="cart-list-wrap" style="flex:1;overflow-y:auto;display:flex;flex-direction:column">
             <div class="cart-items-list" id="cart-items"></div>
           </div>
-
           <div class="cart-footer">
             <div class="cart-totals">
               <div class="cart-total-row">
@@ -1011,20 +1175,18 @@ select.form-control { cursor: pointer; }
                 <span class="val" id="cart-total">0 $</span>
               </div>
             </div>
-
             <div class="pay-methods">
               <button class="pay-btn selected" id="pay-cash" onclick="selectPayMethod('cash')">💵 Наличные</button>
               <button class="pay-btn" id="pay-card" onclick="selectPayMethod('card')">💳 Карта</button>
               <button class="pay-btn" id="pay-transfer" onclick="selectPayMethod('transfer')">📱 Перевод</button>
             </div>
-
             <button class="checkout-btn" id="checkout-btn" onclick="checkout()" disabled>💰 Провести продажу</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══════ WAREHOUSE ══════ -->
+    <!-- WAREHOUSE -->
     <div class="page" id="page-warehouse">
       <div class="toolbar">
         <div class="search-box">
@@ -1041,7 +1203,6 @@ select.form-control { cursor: pointer; }
         </select>
         <button class="btn btn-primary" onclick="openAddProduct()">+ Новый товар</button>
       </div>
-
       <div class="card">
         <div class="card-header">
           <span class="card-title">📦 Склад товаров</span>
@@ -1050,16 +1211,7 @@ select.form-control { cursor: pointer; }
         <div class="table-wrap">
           <table>
             <thead>
-              <tr>
-                <th>Товар</th>
-                <th>Категория</th>
-                <th>Размер</th>
-                <th>Цена</th>
-                <th>Закупка</th>
-                <th>Остаток</th>
-                <th>Статус</th>
-                <th>Действие</th>
-              </tr>
+              <tr><th>Товар</th><th>Категория</th><th>Размер</th><th>Цена</th><th>Закупка</th><th>Остаток</th><th>Статус</th><th>Действие</th></tr>
             </thead>
             <tbody id="wh-table-body"></tbody>
           </table>
@@ -1067,29 +1219,17 @@ select.form-control { cursor: pointer; }
       </div>
     </div>
 
-    <!-- ══════ INCOME ══════ -->
+    <!-- INCOME -->
     <div class="page" id="page-income">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div style="font-size:14px;color:var(--muted)">Запись поступления товара на склад</div>
         <button class="btn btn-primary" onclick="openAddIncome()">+ Новый приход</button>
       </div>
-
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">📥 История приходов</span>
-        </div>
+        <div class="card-header"><span class="card-title">📥 История приходов</span></div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Дата</th>
-                <th>Товар</th>
-                <th>Кол-во</th>
-                <th>Цена закупки</th>
-                <th>Сумма</th>
-                <th>Поставщик</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Дата</th><th>Товар</th><th>Кол-во</th><th>Цена закупки</th><th>Сумма</th><th>Поставщик</th></tr></thead>
             <tbody id="income-table-body">
               <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Нет записей</td></tr>
             </tbody>
@@ -1098,23 +1238,13 @@ select.form-control { cursor: pointer; }
       </div>
     </div>
 
-    <!-- ══════ MOVEMENTS ══════ -->
+    <!-- MOVEMENTS -->
     <div class="page" id="page-movements">
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">🔄 Движение склада (все операции)</span>
-        </div>
+        <div class="card-header"><span class="card-title">🔄 Движение склада (все операции)</span></div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Дата / Время</th>
-                <th>Тип</th>
-                <th>Товар</th>
-                <th>Кол-во</th>
-                <th>Примечание</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Дата / Время</th><th>Тип</th><th>Товар</th><th>Кол-во</th><th>Примечание</th></tr></thead>
             <tbody id="movements-table-body">
               <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Нет записей</td></tr>
             </tbody>
@@ -1123,7 +1253,7 @@ select.form-control { cursor: pointer; }
       </div>
     </div>
 
-    <!-- ══════ SALES ══════ -->
+    <!-- SALES -->
     <div class="page" id="page-sales">
       <div class="toolbar">
         <div class="search-box">
@@ -1136,28 +1266,14 @@ select.form-control { cursor: pointer; }
           <option value="transfer">📱 Перевод</option>
         </select>
       </div>
-
       <div class="card">
         <div class="card-header">
           <span class="card-title">🧾 История продаж</span>
-          <div style="display:flex;gap:8px;align-items:center">
-            <span style="font-size:12px;color:var(--muted)" id="sales-total-shown"></span>
-          </div>
+          <span style="font-size:12px;color:var(--muted)" id="sales-total-shown"></span>
         </div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>№ Чека</th>
-                <th>Дата / Время</th>
-                <th>Состав</th>
-                <th>Кол-во</th>
-                <th>Оплата</th>
-                <th>Скидка</th>
-                <th>Итого</th>
-                <th></th>
-              </tr>
-            </thead>
+            <thead><tr><th>№ Чека</th><th>Дата / Время</th><th>Состав</th><th>Кол-во</th><th>Оплата</th><th>Скидка</th><th>Итого</th><th></th></tr></thead>
             <tbody id="sales-table-body">
               <tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Нет продаж</td></tr>
             </tbody>
@@ -1166,7 +1282,7 @@ select.form-control { cursor: pointer; }
       </div>
     </div>
 
-    <!-- ══════ REPORTS ══════ -->
+    <!-- REPORTS -->
     <div class="page" id="page-reports">
       <div class="stats-grid" style="margin-bottom:20px">
         <div class="stat-card green">
@@ -1190,24 +1306,19 @@ select.form-control { cursor: pointer; }
           <div class="stat-label">Валовая прибыль</div>
         </div>
       </div>
-
       <div class="report-grid">
         <div class="card" style="padding:20px">
           <div class="card-title">📅 Продажи по дням (последние 7 дней)</div>
           <div class="mini-chart" id="sales-chart"></div>
           <div style="display:flex;justify-content:space-between;margin-top:6px" id="sales-chart-labels"></div>
         </div>
-
         <div class="card" style="padding:20px">
           <div class="card-title">🏆 Топ товаров по продажам</div>
           <div class="top-products-list" id="top-products"></div>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">💳 Разбивка по способу оплаты</span>
-        </div>
+        <div class="card-header"><span class="card-title">💳 Разбивка по способу оплаты</span></div>
         <div style="padding:16px;display:flex;gap:16px;flex-wrap:wrap">
           <div class="stat-card" style="flex:1;min-width:140px;border:none;box-shadow:none;background:var(--surface)">
             <div class="stat-icon">💵</div>
@@ -1228,13 +1339,12 @@ select.form-control { cursor: pointer; }
       </div>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-</div><!-- /shell -->
+  </div>
+</div>
+</div>
+</div>
 
-<!-- ══════ MODALS ══════ -->
-
-<!-- Add/Edit Product -->
+<!-- MODALS -->
 <div class="overlay" id="modal-product">
   <div class="modal">
     <div class="modal-header">
@@ -1297,7 +1407,6 @@ select.form-control { cursor: pointer; }
   </div>
 </div>
 
-<!-- Add Income -->
 <div class="overlay" id="modal-income">
   <div class="modal">
     <div class="modal-header">
@@ -1335,7 +1444,6 @@ select.form-control { cursor: pointer; }
   </div>
 </div>
 
-<!-- Receipt Modal -->
 <div class="overlay" id="modal-receipt">
   <div class="modal" style="max-width:400px">
     <div class="modal-header">
@@ -1352,19 +1460,54 @@ select.form-control { cursor: pointer; }
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ─────────────────────────────
-//  DATA STORE
-// ─────────────────────────────
+// ─── LOGIN ───
+const VALID_USER = 'Bahrom';
+const VALID_PASS = 'AD42';
+
+function doLogin() {
+  const u = document.getElementById('login-username').value.trim();
+  const p = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  const box = document.getElementById('login-box');
+
+  if(u === VALID_USER && p === VALID_PASS) {
+    errEl.classList.remove('show');
+    document.getElementById('login-screen').style.opacity = '0';
+    document.getElementById('login-screen').style.transition = 'opacity 0.4s';
+    setTimeout(() => {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      renderDashboard();
+    }, 400);
+  } else {
+    errEl.classList.add('show');
+    box.classList.remove('shake');
+    void box.offsetWidth;
+    box.classList.add('shake');
+    document.getElementById('login-password').value = '';
+    document.getElementById('login-password').focus();
+  }
+}
+
+function doLogout() {
+  if(!confirm('Выйти из системы?')) return;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-screen').style.opacity = '1';
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').classList.remove('show');
+}
+
+// ─── DATA STORE ───
 let products = JSON.parse(localStorage.getItem('ch_products') || '[]');
 let salesHistory = JSON.parse(localStorage.getItem('ch_sales') || '[]');
 let movementsHistory = JSON.parse(localStorage.getItem('ch_movements') || '[]');
 let incomeHistory = JSON.parse(localStorage.getItem('ch_income') || '[]');
 
-// POS state
 let cartItems = [];
 let payMethod = 'cash';
 let selectedPosCategory = '';
@@ -1380,9 +1523,7 @@ function save() {
 
 function genId() { return Date.now() + Math.random().toString(36).slice(2,7); }
 
-// ─────────────────────────────
-//  CLOCK
-// ─────────────────────────────
+// ─── CLOCK ───
 function updateClock() {
   const now = new Date();
   document.getElementById('clock').textContent =
@@ -1392,18 +1533,12 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ─────────────────────────────
-//  NAVIGATION
-// ─────────────────────────────
+// ─── NAVIGATION ───
 const pages = ['dashboard','pos','warehouse','income','movements','sales','reports'];
 const titles = {
-  dashboard:'Дашборд',
-  pos:'Касса (POS)',
-  warehouse:'Склад — Остатки',
-  income:'Приход товара',
-  movements:'Движение склада',
-  sales:'История продаж',
-  reports:'Отчёты & Аналитика'
+  dashboard:'Дашборд', pos:'Касса (POS)', warehouse:'Склад — Остатки',
+  income:'Приход товара', movements:'Движение склада',
+  sales:'История продаж', reports:'Отчёты & Аналитика'
 };
 
 function showPage(id) {
@@ -1413,7 +1548,6 @@ function showPage(id) {
   });
   document.getElementById('topbarTitle').textContent = titles[id] || '';
   closeSidebar();
-
   if(id==='dashboard') renderDashboard();
   else if(id==='warehouse') renderWarehouse();
   else if(id==='pos') renderPos();
@@ -1423,9 +1557,6 @@ function showPage(id) {
   else if(id==='movements') renderMovements();
 }
 
-// ─────────────────────────────
-//  SIDEBAR MOBILE
-// ─────────────────────────────
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('overlayBg').classList.toggle('open');
@@ -1435,15 +1566,9 @@ function closeSidebar() {
   document.getElementById('overlayBg').classList.remove('open');
 }
 
-// ─────────────────────────────
-//  MODALS
-// ─────────────────────────────
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-// ─────────────────────────────
-//  TOAST
-// ─────────────────────────────
 let toastTimer;
 function toast(msg, type='success') {
   const el = document.getElementById('toast');
@@ -1453,20 +1578,16 @@ function toast(msg, type='success') {
   toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
 }
 
-// ─────────────────────────────
-//  PRODUCTS
-// ─────────────────────────────
+// ─── PRODUCTS ───
 function openAddProduct() {
   document.getElementById('product-modal-title').textContent = 'Новый товар';
   document.getElementById('prod-edit-id').value = '';
-  document.getElementById('prod-name').value = '';
+  ['prod-name','prod-size','prod-sku'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('prod-cat').value = '📦 Комплекты';
-  document.getElementById('prod-size').value = '';
   document.getElementById('prod-price').value = '';
   document.getElementById('prod-cost').value = '';
   document.getElementById('prod-qty').value = '0';
   document.getElementById('prod-min-qty').value = '3';
-  document.getElementById('prod-sku').value = '';
   openModal('modal-product');
 }
 
@@ -1496,58 +1617,40 @@ function saveProduct() {
   const qty = parseInt(document.getElementById('prod-qty').value)||0;
   const minQty = parseInt(document.getElementById('prod-min-qty').value)||3;
   const sku = document.getElementById('prod-sku').value.trim();
-
   if(!name) { toast('Введите название товара','error'); return; }
   if(price<=0) { toast('Введите цену продажи','error'); return; }
-
   if(editId) {
     const idx = products.findIndex(p=>p.id===editId);
-    if(idx>=0) {
-      products[idx] = {...products[idx], name,cat,size,price,cost,minQty,sku};
-    }
+    if(idx>=0) products[idx] = {...products[idx], name,cat,size,price,cost,minQty,sku};
     toast('Товар обновлён ✅');
   } else {
     const prod = { id:genId(), name, cat, size, price, cost, qty, minQty, sku, createdAt: new Date().toISOString() };
     products.push(prod);
-    if(qty>0) {
-      movementsHistory.unshift({id:genId(), date:now(), type:'Начальный остаток', product:name, qty, note:'Добавлен в систему'});
-    }
+    if(qty>0) movementsHistory.unshift({id:genId(), date:nowStr(), type:'Начальный остаток', product:name, qty, note:'Добавлен в систему'});
     toast('Товар добавлен ✅');
   }
-
-  save();
-  closeModal('modal-product');
-  renderWarehouse();
-  updateDashStats();
+  save(); closeModal('modal-product'); renderWarehouse(); updateDashStats();
 }
 
 function deleteProduct(id) {
   if(!confirm('Удалить этот товар?')) return;
   products = products.filter(p=>p.id!==id);
-  save();
-  renderWarehouse();
-  updateDashStats();
+  save(); renderWarehouse(); updateDashStats();
   toast('Товар удалён','error');
 }
 
-// ─────────────────────────────
-//  INCOME
-// ─────────────────────────────
+// ─── INCOME ───
 function openAddIncome() {
   const sel = document.getElementById('income-product');
   sel.innerHTML = products.map(p=>`<option value="${p.id}">${p.name} — ${p.size||''} (${p.cat})</option>`).join('');
   document.getElementById('income-qty').value = '1';
-  document.getElementById('income-cost').value = '';
+  document.getElementById('income-cost').value = products[0]?.cost||'';
   document.getElementById('income-supplier').value = '';
   document.getElementById('income-note').value = '';
-  if(products.length>0) {
-    const first = products[0];
-    document.getElementById('income-cost').value = first.cost||'';
-  }
-  sel.addEventListener('change', function() {
+  sel.onchange = function() {
     const p = products.find(x=>x.id===this.value);
     if(p) document.getElementById('income-cost').value = p.cost||'';
-  });
+  };
   openModal('modal-income');
 }
 
@@ -1557,57 +1660,30 @@ function saveIncome() {
   const cost = parseFloat(document.getElementById('income-cost').value)||0;
   const supplier = document.getElementById('income-supplier').value.trim();
   const note = document.getElementById('income-note').value.trim();
-
   if(!prodId) { toast('Выберите товар','error'); return; }
   if(qty<=0) { toast('Укажите количество','error'); return; }
-
   const p = products.find(x=>x.id===prodId);
   if(!p) return;
-
   p.qty += qty;
   if(cost>0) p.cost = cost;
-
-  const record = {
-    id: genId(),
-    date: now(),
-    productId: prodId,
-    productName: p.name,
-    qty,
-    cost,
-    total: qty*cost,
-    supplier,
-    note
-  };
-
+  const record = { id:genId(), date:nowStr(), productId:prodId, productName:p.name, qty, cost, total:qty*cost, supplier, note };
   incomeHistory.unshift(record);
-  movementsHistory.unshift({
-    id:genId(), date:now(), type:'Приход', product:p.name, qty, note: supplier||note||''
-  });
-
-  save();
-  closeModal('modal-income');
-  renderIncome();
-  renderMovements();
-  renderWarehouse();
-  updateDashStats();
+  movementsHistory.unshift({id:genId(), date:nowStr(), type:'Приход', product:p.name, qty, note: supplier||note||''});
+  save(); closeModal('modal-income');
+  renderIncome(); renderMovements(); renderWarehouse(); updateDashStats();
   toast(`+${qty} шт. ${p.name} на складе ✅`);
 }
 
-// ─────────────────────────────
-//  WAREHOUSE RENDER
-// ─────────────────────────────
+// ─── WAREHOUSE ───
 function filterWarehouse() { renderWarehouse(); }
 
 function renderWarehouse() {
-  // populate category filter
   const catFilter = document.getElementById('wh-cat-filter');
   const cats = [...new Set(products.map(p=>p.cat))];
   const currentCat = catFilter.value;
   catFilter.innerHTML = '<option value="">Все категории</option>' + cats.map(c=>`<option value="${c}" ${c===currentCat?'selected':''}>${c}</option>`).join('');
-
   const search = document.getElementById('wh-search').value.toLowerCase();
   const stockFilter = document.getElementById('wh-stock-filter').value;
-
   let filtered = products.filter(p=>{
     if(search && !p.name.toLowerCase().includes(search) && !(p.size||'').toLowerCase().includes(search)) return false;
     if(currentCat && p.cat!==currentCat) return false;
@@ -1616,108 +1692,71 @@ function renderWarehouse() {
     if(stockFilter==='zero' && p.qty!==0) return false;
     return true;
   });
-
   document.getElementById('wh-count').textContent = `${filtered.length} позиций`;
-
   const tbody = document.getElementById('wh-table-body');
-  if(filtered.length===0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Нет товаров</td></tr>';
-    return;
-  }
-
+  if(!filtered.length) { tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Нет товаров</td></tr>'; return; }
   tbody.innerHTML = filtered.map(p=>{
-    let statusBadge, statusClass;
-    if(p.qty===0) { statusBadge='❌ Нет'; statusClass='badge-red'; }
-    else if(p.qty<=p.minQty) { statusBadge='⚠️ Мало'; statusClass='badge-orange'; }
-    else { statusBadge='✅ Есть'; statusClass='badge-green'; }
-
+    let sb,sc;
+    if(p.qty===0){sb='❌ Нет';sc='badge-red';}
+    else if(p.qty<=p.minQty){sb='⚠️ Мало';sc='badge-orange';}
+    else{sb='✅ Есть';sc='badge-green';}
     return `<tr>
-      <td>
-        <div class="product-name">${p.name}</div>
-        ${p.sku?`<div class="product-cat">SKU: ${p.sku}</div>`:''}
-      </td>
+      <td><div class="product-name">${p.name}</div>${p.sku?`<div class="product-cat">SKU: ${p.sku}</div>`:''}</td>
       <td>${p.cat}</td>
       <td style="color:var(--mid);font-size:12px">${p.size||'—'}</td>
       <td><span style="font-family:'DM Mono',monospace;font-weight:500;color:var(--green-dark)">${p.price} $</span></td>
-      <td><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${p.cost||'—'} ${p.cost?'$':''}</span></td>
+      <td><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${p.cost||'—'}${p.cost?' $':''}</span></td>
       <td><span class="qty-badge" style="color:${p.qty===0?'var(--red)':p.qty<=p.minQty?'var(--orange)':'var(--dark)'}">${p.qty} шт.</span></td>
-      <td><span class="badge ${statusClass}">${statusBadge}</span></td>
-      <td>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-sm btn-secondary" onclick="editProduct('${p.id}')">✏️</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteProduct('${p.id}')">🗑</button>
-        </div>
-      </td>
+      <td><span class="badge ${sc}">${sb}</span></td>
+      <td><div style="display:flex;gap:6px"><button class="btn btn-sm btn-secondary" onclick="editProduct('${p.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="deleteProduct('${p.id}')">🗑</button></div></td>
     </tr>`;
   }).join('');
 }
 
-// ─────────────────────────────
-//  INCOME RENDER
-// ─────────────────────────────
+// ─── INCOME RENDER ───
 function renderIncome() {
   const tbody = document.getElementById('income-table-body');
-  if(incomeHistory.length===0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Нет записей</td></tr>';
-    return;
-  }
-  tbody.innerHTML = incomeHistory.map(r=>`
-    <tr>
-      <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${r.date}</td>
-      <td><div class="product-name">${r.productName}</div></td>
-      <td><span class="badge badge-blue">+${r.qty} шт.</span></td>
-      <td style="font-family:'DM Mono',monospace">${r.cost||'—'} ${r.cost?'$':''}</td>
-      <td style="font-family:'DM Mono',monospace;color:var(--orange)">${r.total?r.total.toFixed(2)+' $':'—'}</td>
-      <td style="color:var(--mid);font-size:12px">${r.supplier||'—'}</td>
-    </tr>`).join('');
+  if(!incomeHistory.length) { tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Нет записей</td></tr>'; return; }
+  tbody.innerHTML = incomeHistory.map(r=>`<tr>
+    <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${r.date}</td>
+    <td><div class="product-name">${r.productName}</div></td>
+    <td><span class="badge badge-blue">+${r.qty} шт.</span></td>
+    <td style="font-family:'DM Mono',monospace">${r.cost||'—'}${r.cost?' $':''}</td>
+    <td style="font-family:'DM Mono',monospace;color:var(--orange)">${r.total?r.total.toFixed(2)+' $':'—'}</td>
+    <td style="color:var(--mid);font-size:12px">${r.supplier||'—'}</td>
+  </tr>`).join('');
 }
 
-// ─────────────────────────────
-//  MOVEMENTS RENDER
-// ─────────────────────────────
+// ─── MOVEMENTS RENDER ───
 function renderMovements() {
   const tbody = document.getElementById('movements-table-body');
-  if(movementsHistory.length===0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Нет записей</td></tr>';
-    return;
-  }
+  if(!movementsHistory.length) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Нет записей</td></tr>'; return; }
   tbody.innerHTML = movementsHistory.map(m=>{
-    let badge='badge-gray', icon='🔄';
-    if(m.type==='Продажа') {badge='badge-red';icon='💸';}
-    else if(m.type==='Приход') {badge='badge-green';icon='📥';}
-    else if(m.type==='Начальный остаток') {badge='badge-blue';icon='📦';}
+    let badge='badge-gray',icon='🔄';
+    if(m.type==='Продажа'){badge='badge-red';icon='💸';}
+    else if(m.type==='Приход'){badge='badge-green';icon='📥';}
+    else if(m.type==='Начальный остаток'){badge='badge-blue';icon='📦';}
     return `<tr>
       <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${m.date}</td>
       <td><span class="badge ${badge}">${icon} ${m.type}</span></td>
       <td class="product-name">${m.product}</td>
-      <td style="font-family:'DM Mono',monospace">${m.type==='Продажа'?'-':'+'} ${m.qty} шт.</td>
+      <td style="font-family:'DM Mono',monospace">${m.type==='Продажа'?'−':'+'} ${m.qty} шт.</td>
       <td style="color:var(--mid);font-size:12px">${m.note||'—'}</td>
     </tr>`;
   }).join('');
 }
 
-// ─────────────────────────────
-//  POS
-// ─────────────────────────────
-function renderPos() {
-  renderPosCategoryTabs();
-  renderPosGrid();
-  renderCartUI();
-}
+// ─── POS ───
+function renderPos() { renderPosCategoryTabs(); renderPosGrid(); renderCartUI(); }
 
 function renderPosCategoryTabs() {
   const cats = [...new Set(products.map(p=>p.cat))];
-  const tabs = document.getElementById('pos-cat-tabs');
-  tabs.innerHTML = `<div class="cat-tab ${selectedPosCategory===''?'active':''}" onclick="selectPosCategory('')">Все</div>` +
+  document.getElementById('pos-cat-tabs').innerHTML =
+    `<div class="cat-tab ${selectedPosCategory===''?'active':''}" onclick="selectPosCategory('')">Все</div>` +
     cats.map(c=>`<div class="cat-tab ${selectedPosCategory===c?'active':''}" onclick="selectPosCategory('${c}')">${c}</div>`).join('');
 }
 
-function selectPosCategory(cat) {
-  selectedPosCategory = cat;
-  renderPosCategoryTabs();
-  renderPosGrid();
-}
-
+function selectPosCategory(cat) { selectedPosCategory=cat; renderPosCategoryTabs(); renderPosGrid(); }
 function filterPosItems() { renderPosGrid(); }
 
 function renderPosGrid() {
@@ -1728,12 +1767,7 @@ function renderPosGrid() {
     if(search && !p.name.toLowerCase().includes(search) && !(p.size||'').toLowerCase().includes(search)) return false;
     return true;
   });
-
-  if(filtered.length===0) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:30px">Нет товаров</div>';
-    return;
-  }
-
+  if(!filtered.length) { grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:30px">Нет товаров</div>'; return; }
   grid.innerHTML = filtered.map(p=>`
     <div class="pos-item ${p.qty===0?'out-of-stock':''}" onclick="addToCart_pos('${p.id}')">
       <div class="pos-item-name">${p.name}</div>
@@ -1748,7 +1782,7 @@ function addToCart_pos(prodId) {
   if(!p||p.qty===0) return;
   const existing = cartItems.find(c=>c.id===prodId);
   if(existing) {
-    if(existing.qty >= p.qty) { toast('Недостаточно на складе','error'); return; }
+    if(existing.qty>=p.qty){toast('Недостаточно на складе','error');return;}
     existing.qty++;
   } else {
     cartItems.push({id:prodId, name:p.name, price:p.price, qty:1, cat:p.cat});
@@ -1759,8 +1793,8 @@ function addToCart_pos(prodId) {
 function removeFromCart_pos(prodId) {
   const idx = cartItems.findIndex(c=>c.id===prodId);
   if(idx<0) return;
-  if(cartItems[idx].qty>1) { cartItems[idx].qty--; }
-  else { cartItems.splice(idx,1); }
+  if(cartItems[idx].qty>1) cartItems[idx].qty--;
+  else cartItems.splice(idx,1);
   renderCartUI();
 }
 
@@ -1773,8 +1807,8 @@ function selectPayMethod(m) {
 
 function renderCartUI() {
   const el = document.getElementById('cart-items');
-  if(cartItems.length===0) {
-    el.innerHTML = `<div class="cart-empty-msg"><div class="icon">🛒</div><div>Нажмите на товар<br>чтобы добавить в чек</div></div>`;
+  if(!cartItems.length) {
+    el.innerHTML=`<div class="cart-empty-msg"><div class="icon">🛒</div><div>Нажмите на товар<br>чтобы добавить в чек</div></div>`;
     document.getElementById('checkout-btn').disabled=true;
   } else {
     el.innerHTML = cartItems.map(c=>`
@@ -1804,43 +1838,23 @@ function updateCartTotals() {
 }
 
 function checkout() {
-  if(cartItems.length===0) return;
+  if(!cartItems.length) return;
   const disc = Math.min(100,Math.max(0,parseFloat(document.getElementById('discount-input').value)||0));
   const subtotal = cartItems.reduce((s,c)=>s+c.price*c.qty,0);
   const total = subtotal*(1-disc/100);
   const receiptNum = 'CHK-'+String(receiptCounter).padStart(4,'0');
   receiptCounter++;
-
-  // Deduct from stock & record movements
   cartItems.forEach(ci=>{
     const p = products.find(x=>x.id===ci.id);
-    if(p) {
-      p.qty -= ci.qty;
-      if(p.qty<0) p.qty=0;
-      movementsHistory.unshift({id:genId(),date:now(),type:'Продажа',product:p.name,qty:ci.qty,note:`Чек ${receiptNum}`});
-    }
+    if(p){ p.qty-=ci.qty; if(p.qty<0)p.qty=0; movementsHistory.unshift({id:genId(),date:nowStr(),type:'Продажа',product:p.name,qty:ci.qty,note:`Чек ${receiptNum}`}); }
   });
-
-  const sale = {
-    id: genId(),
-    receiptNum,
-    date: now(),
-    items: cartItems.map(c=>({...c})),
-    subtotal,
-    discount: disc,
-    total,
-    payMethod
-  };
-
+  const sale = { id:genId(), receiptNum, date:nowStr(), items:cartItems.map(c=>({...c})), subtotal, discount:disc, total, payMethod };
   salesHistory.unshift(sale);
   save();
-
   showReceipt(sale);
   cartItems=[];
   document.getElementById('discount-input').value='0';
-  renderCartUI();
-  renderPosGrid();
-  updateDashStats();
+  renderCartUI(); renderPosGrid(); updateDashStats();
   toast(`Продажа ${receiptNum} — ${total.toFixed(2)} $ ✅`);
 }
 
@@ -1849,7 +1863,6 @@ function showReceipt(sale) {
   const lines = sale.items.map(i=>`
     <div class="receipt-row"><span>${i.name}</span></div>
     <div class="receipt-row"><span>${i.qty}шт × ${i.price}$</span><span>${(i.price*i.qty).toFixed(2)} $</span></div>`).join('');
-
   document.getElementById('receipt-content').innerHTML = `
     <div class="receipt-header">
       <div class="receipt-logo">CHINAR</div>
@@ -1867,114 +1880,74 @@ function showReceipt(sale) {
     <div class="receipt-row" style="margin-top:4px"><span>Оплата</span><span>${payLabel}</span></div>
     <hr class="receipt-divider">
     <div style="text-align:center;font-size:10px;color:var(--muted)">Спасибо за покупку!</div>`;
-
   openModal('modal-receipt');
 }
 
-// ─────────────────────────────
-//  SALES RENDER
-// ─────────────────────────────
+// ─── SALES ───
 function filterSales() { renderSales(); }
 
 function renderSales() {
   const search = document.getElementById('sales-search').value.toLowerCase();
   const payFilter = document.getElementById('sales-pay-filter').value;
-
   let filtered = salesHistory.filter(s=>{
     if(search && !s.receiptNum.toLowerCase().includes(search) && !s.items.some(i=>i.name.toLowerCase().includes(search))) return false;
     if(payFilter && s.payMethod!==payFilter) return false;
     return true;
   });
-
   const totalSum = filtered.reduce((s,x)=>s+x.total,0);
   document.getElementById('sales-total-shown').textContent = `${filtered.length} чеков · ${totalSum.toFixed(2)} $`;
-
   const tbody = document.getElementById('sales-table-body');
-  if(filtered.length===0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Нет продаж</td></tr>';
-    return;
-  }
-
+  if(!filtered.length) { tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Нет продаж</td></tr>'; return; }
   const payIcon = {cash:'💵',card:'💳',transfer:'📱'};
-  tbody.innerHTML = filtered.map(s=>`
-    <tr>
-      <td><span style="font-family:'DM Mono',monospace;font-weight:600;color:var(--green-dark)">${s.receiptNum}</span></td>
-      <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${s.date}</td>
-      <td style="font-size:12px">${s.items.map(i=>i.name).join(', ')}</td>
-      <td>${s.items.reduce((a,i)=>a+i.qty,0)} шт.</td>
-      <td>${payIcon[s.payMethod]||''} ${({cash:'Наличные',card:'Карта',transfer:'Перевод'})[s.payMethod]||s.payMethod}</td>
-      <td>${s.discount?s.discount+'%':'—'}</td>
-      <td><span class="hist-amount" style="color:var(--green-dark)">${s.total.toFixed(2)} $</span></td>
-      <td><button class="btn btn-sm btn-secondary" onclick="showReceiptById('${s.id}')">🧾</button></td>
-    </tr>`).join('');
+  tbody.innerHTML = filtered.map(s=>`<tr>
+    <td><span style="font-family:'DM Mono',monospace;font-weight:600;color:var(--green-dark)">${s.receiptNum}</span></td>
+    <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${s.date}</td>
+    <td style="font-size:12px">${s.items.map(i=>i.name).join(', ')}</td>
+    <td>${s.items.reduce((a,i)=>a+i.qty,0)} шт.</td>
+    <td>${payIcon[s.payMethod]||''} ${{cash:'Наличные',card:'Карта',transfer:'Перевод'}[s.payMethod]||s.payMethod}</td>
+    <td>${s.discount?s.discount+'%':'—'}</td>
+    <td><span class="hist-amount" style="color:var(--green-dark)">${s.total.toFixed(2)} $</span></td>
+    <td><button class="btn btn-sm btn-secondary" onclick="showReceiptById('${s.id}')">🧾</button></td>
+  </tr>`).join('');
 }
 
-function showReceiptById(id) {
-  const sale = salesHistory.find(s=>s.id===id);
-  if(sale) showReceipt(sale);
-}
+function showReceiptById(id) { const s=salesHistory.find(x=>x.id===id); if(s) showReceipt(s); }
 
-// ─────────────────────────────
-//  DASHBOARD
-// ─────────────────────────────
+// ─── DASHBOARD ───
 function renderDashboard() {
   updateDashStats();
-
-  // Low stock table
   const lowProds = products.filter(p=>p.qty<=p.minQty);
   const lowTbody = document.getElementById('dash-low-stock');
-  if(lowProds.length===0) {
+  if(!lowProds.length) {
     lowTbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px">Всё в норме ✅</td></tr>';
   } else {
-    lowTbody.innerHTML = lowProds.map(p=>{
-      const badge = p.qty===0?'badge-red':'badge-orange';
-      const status = p.qty===0?'❌ Нет':'⚠️ Мало';
-      return `<tr><td class="product-name">${p.name}</td><td style="font-family:'DM Mono',monospace">${p.qty} шт.</td><td><span class="badge ${badge}">${status}</span></td></tr>`;
-    }).join('');
+    lowTbody.innerHTML = lowProds.map(p=>`<tr><td class="product-name">${p.name}</td><td style="font-family:'DM Mono',monospace">${p.qty} шт.</td><td><span class="badge ${p.qty===0?'badge-red':'badge-orange'}">${p.qty===0?'❌ Нет':'⚠️ Мало'}</span></td></tr>`).join('');
   }
-
-  // Warning bar
-  const warnEl = document.getElementById('low-stock-warning');
-  if(lowProds.length>0) {
-    warnEl.innerHTML=`<div class="low-stock-bar">⚠️ <strong>${lowProds.length} позиций</strong> с низким остатком — требуют внимания</div>`;
-  } else {
-    warnEl.innerHTML='';
-  }
-
-  // Recent sales
-  const recentTbody = document.getElementById('dash-recent-sales');
+  document.getElementById('low-stock-warning').innerHTML = lowProds.length
+    ? `<div class="low-stock-bar">⚠️ <strong>${lowProds.length} позиций</strong> с низким остатком — требуют внимания</div>` : '';
   const recent = salesHistory.slice(0,8);
-  if(recent.length===0) {
+  const recentTbody = document.getElementById('dash-recent-sales');
+  if(!recent.length) {
     recentTbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">Нет продаж</td></tr>';
   } else {
     const payIcon = {cash:'💵',card:'💳',transfer:'📱'};
-    recentTbody.innerHTML = recent.map(s=>`
-      <tr>
-        <td style="font-size:12px">${s.items.map(i=>i.name).join(', ')}</td>
-        <td>${s.items.reduce((a,i)=>a+i.qty,0)} шт.</td>
-        <td style="font-family:'DM Mono',monospace;color:var(--green-dark)">${s.total.toFixed(2)} $</td>
-        <td>${payIcon[s.payMethod]||''}</td>
-      </tr>`).join('');
+    recentTbody.innerHTML = recent.map(s=>`<tr>
+      <td style="font-size:12px">${s.items.map(i=>i.name).join(', ')}</td>
+      <td>${s.items.reduce((a,i)=>a+i.qty,0)} шт.</td>
+      <td style="font-family:'DM Mono',monospace;color:var(--green-dark)">${s.total.toFixed(2)} $</td>
+      <td>${payIcon[s.payMethod]||''}</td>
+    </tr>`).join('');
   }
 }
 
 function updateDashStats() {
-  const todayStr = new Date().toLocaleDateString('ru-RU');
-  const todaySales = salesHistory.filter(s=>s.date.startsWith(todayStr.split('.').reverse().join('-'))||s.date.includes(todayStr.split('.')[0]+'.'+todayStr.split('.')[1]+'.'+todayStr.split('.')[2]));
-  // Flexible today check
-  const todayMs = new Date(); todayMs.setHours(0,0,0,0);
-  const todaySales2 = salesHistory.filter(s=>{
-    try { return new Date(s.date.split(' ')[0].split('.').reverse().join('-'))>=todayMs; } catch(e){return false;}
-  });
-  // Simpler: just check date string matches today's date parts
   const today = new Date();
   const dd = String(today.getDate()).padStart(2,'0');
   const mm = String(today.getMonth()+1).padStart(2,'0');
   const yyyy = today.getFullYear();
-  const todayPrefix = `${dd}.${mm}.${yyyy}`;
-  const todayFiltered = salesHistory.filter(s=>s.date.startsWith(todayPrefix));
+  const prefix = `${dd}.${mm}.${yyyy}`;
+  const todayFiltered = salesHistory.filter(s=>s.date.startsWith(prefix));
   const todayRevenue = todayFiltered.reduce((s,x)=>s+x.total,0);
-
   document.getElementById('stat-revenue').textContent = todayRevenue.toFixed(0)+' $';
   document.getElementById('stat-revenue-change').textContent = `Всего: ${salesHistory.reduce((s,x)=>s+x.total,0).toFixed(0)} $`;
   document.getElementById('stat-sales').textContent = todayFiltered.length;
@@ -1982,98 +1955,58 @@ function updateDashStats() {
   document.getElementById('stat-low').textContent = products.filter(p=>p.qty<=p.minQty).length;
 }
 
-// ─────────────────────────────
-//  REPORTS
-// ─────────────────────────────
+// ─── REPORTS ───
 function renderReports() {
   const totalRevenue = salesHistory.reduce((s,x)=>s+x.total,0);
   const totalSold = salesHistory.reduce((s,x)=>s+x.items.reduce((a,i)=>a+i.qty,0),0);
   const avgCheck = salesHistory.length ? totalRevenue/salesHistory.length : 0;
-
-  // Profit calculation
   let profit = 0;
-  salesHistory.forEach(s=>{
-    s.items.forEach(i=>{
-      const p = products.find(x=>x.id===i.id);
-      const cost = p?.cost||0;
-      profit += (i.price - cost)*i.qty*(1-s.discount/100);
-    });
-  });
-
+  salesHistory.forEach(s=>s.items.forEach(i=>{
+    const p = products.find(x=>x.id===i.id);
+    profit += (i.price-(p?.cost||0))*i.qty*(1-s.discount/100);
+  }));
   document.getElementById('rep-total-revenue').textContent = totalRevenue.toFixed(0)+' $';
   document.getElementById('rep-total-sold').textContent = totalSold;
   document.getElementById('rep-avg-check').textContent = avgCheck.toFixed(0)+' $';
   document.getElementById('rep-profit').textContent = profit.toFixed(0)+' $';
-
-  // Pay breakdown
-  const cashTotal = salesHistory.filter(s=>s.payMethod==='cash').reduce((a,s)=>a+s.total,0);
-  const cardTotal = salesHistory.filter(s=>s.payMethod==='card').reduce((a,s)=>a+s.total,0);
-  const transferTotal = salesHistory.filter(s=>s.payMethod==='transfer').reduce((a,s)=>a+s.total,0);
-  document.getElementById('rep-cash').textContent = cashTotal.toFixed(0)+' $';
-  document.getElementById('rep-card').textContent = cardTotal.toFixed(0)+' $';
-  document.getElementById('rep-transfer').textContent = transferTotal.toFixed(0)+' $';
-
-  // Sales chart (last 7 days)
-  const chartEl = document.getElementById('sales-chart');
-  const labelsEl = document.getElementById('sales-chart-labels');
-  const days = [];
+  document.getElementById('rep-cash').textContent = salesHistory.filter(s=>s.payMethod==='cash').reduce((a,s)=>a+s.total,0).toFixed(0)+' $';
+  document.getElementById('rep-card').textContent = salesHistory.filter(s=>s.payMethod==='card').reduce((a,s)=>a+s.total,0).toFixed(0)+' $';
+  document.getElementById('rep-transfer').textContent = salesHistory.filter(s=>s.payMethod==='transfer').reduce((a,s)=>a+s.total,0).toFixed(0)+' $';
+  const days=[];
   for(let i=6;i>=0;i--){
-    const d = new Date(); d.setDate(d.getDate()-i);
-    const dd = String(d.getDate()).padStart(2,'0');
-    const mm = String(d.getMonth()+1).padStart(2,'0');
-    const yyyy = d.getFullYear();
-    const prefix = `${dd}.${mm}.${yyyy}`;
-    const dayTotal = salesHistory.filter(s=>s.date.startsWith(prefix)).reduce((a,s)=>a+s.total,0);
-    days.push({label:`${dd}.${mm}`, total:dayTotal});
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const dd=String(d.getDate()).padStart(2,'0'), mm=String(d.getMonth()+1).padStart(2,'0'), yyyy=d.getFullYear();
+    const prefix=`${dd}.${mm}.${yyyy}`;
+    days.push({label:`${dd}.${mm}`, total:salesHistory.filter(s=>s.date.startsWith(prefix)).reduce((a,s)=>a+s.total,0)});
   }
   const maxVal = Math.max(...days.map(d=>d.total),1);
-  chartEl.innerHTML = days.map(d=>`
-    <div class="bar" style="height:${Math.max(4,(d.total/maxVal)*100)}%">
-      <div class="bar-tip">${d.total.toFixed(0)} $</div>
-    </div>`).join('');
-  labelsEl.innerHTML = days.map(d=>`<span style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace">${d.label}</span>`).join('');
-
-  // Top products
-  const prodSales = {};
+  document.getElementById('sales-chart').innerHTML = days.map(d=>`<div class="bar" style="height:${Math.max(4,(d.total/maxVal)*100)}%"><div class="bar-tip">${d.total.toFixed(0)} $</div></div>`).join('');
+  document.getElementById('sales-chart-labels').innerHTML = days.map(d=>`<span style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace">${d.label}</span>`).join('');
+  const prodSales={};
   salesHistory.forEach(s=>s.items.forEach(i=>{
-    if(!prodSales[i.name]) prodSales[i.name]={name:i.name,qty:0,revenue:0};
+    if(!prodSales[i.name]) prodSales[i.name]={name:i.name,qty:0};
     prodSales[i.name].qty+=i.qty;
-    prodSales[i.name].revenue+=i.price*i.qty;
   }));
-  const sorted = Object.values(prodSales).sort((a,b)=>b.qty-a.qty).slice(0,5);
-  const maxQty = Math.max(...sorted.map(p=>p.qty),1);
+  const sorted=Object.values(prodSales).sort((a,b)=>b.qty-a.qty).slice(0,5);
+  const maxQty=Math.max(...sorted.map(p=>p.qty),1);
   document.getElementById('top-products').innerHTML = sorted.length===0
     ? '<div style="color:var(--muted);font-size:13px">Нет данных</div>'
-    : sorted.map((p,i)=>`
-      <div class="top-prod-row">
+    : sorted.map((p,i)=>`<div class="top-prod-row">
         <div class="top-prod-rank">${i+1}</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
-          <div class="top-prod-bar-bg"><div class="top-prod-bar-fill" style="width:${(p.qty/maxQty)*100}%"></div></div>
-        </div>
+        <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div><div class="top-prod-bar-bg"><div class="top-prod-bar-fill" style="width:${(p.qty/maxQty)*100}%"></div></div></div>
         <div style="font-family:'DM Mono',monospace;font-size:12px;flex-shrink:0">${p.qty} шт.</div>
       </div>`).join('');
 }
 
-// ─────────────────────────────
-//  UTILS
-// ─────────────────────────────
-function now() {
-  const d = new Date();
-  const dd = String(d.getDate()).padStart(2,'0');
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const yyyy = d.getFullYear();
-  const hh = String(d.getHours()).padStart(2,'0');
-  const min = String(d.getMinutes()).padStart(2,'0');
-  return `${dd}.${mm}.${yyyy} ${hh}:${min}`;
+// ─── UTILS ───
+function nowStr() {
+  const d=new Date();
+  return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
 
-// ─────────────────────────────
-//  INIT
-// ─────────────────────────────
-// Load sample data if empty
+// ─── INIT SAMPLE DATA ───
 if(products.length===0) {
-  const sampleProducts = [
+  products = [
     {id:genId(),name:'Milano',cat:'📦 Комплекты',size:'85x85 cm',price:237,cost:150,qty:5,minQty:2,sku:'ML-001',createdAt:new Date().toISOString()},
     {id:genId(),name:'Milano',cat:'📦 Комплекты',size:'160x85 cm',price:350,cost:220,qty:3,minQty:2,sku:'ML-002',createdAt:new Date().toISOString()},
     {id:genId(),name:'Paris',cat:'📦 Комплекты',size:'85x85 cm',price:405,cost:260,qty:2,minQty:3,sku:'PR-001',createdAt:new Date().toISOString()},
@@ -2085,15 +2018,11 @@ if(products.length===0) {
     {id:genId(),name:'FM-2001',cat:'🪵 Столы',size:'85x85 cm',price:81,cost:48,qty:8,minQty:3,sku:'TB-001',createdAt:new Date().toISOString()},
     {id:genId(),name:'Chanel 1',cat:'📦 Комплекты',size:'85x85 cm',price:413,cost:270,qty:3,minQty:2,sku:'CH-001',createdAt:new Date().toISOString()},
   ];
-  products = sampleProducts;
   save();
 }
 
-// Initial render
-renderDashboard();
-
-// Keyboard shortcut: press F2 for POS
 document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && document.getElementById('login-screen').style.display!=='none' && document.getElementById('login-screen').style.opacity!=='0') doLogin();
   if(e.key==='F2') { showPage('pos'); e.preventDefault(); }
 });
 </script>
